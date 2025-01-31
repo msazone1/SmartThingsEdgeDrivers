@@ -10,10 +10,12 @@ components:
         enabledValues:
         - locked
         - unlocked
-        - unknown
+        - not fully locked
   - id: battery
     version: 1
   - id: tamperAlert
+    version: 1
+  - id: firmwareUpdate
     version: 1
   - id: refresh
     version: 1
