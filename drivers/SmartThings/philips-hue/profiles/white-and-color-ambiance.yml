@@ -16,3 +16,6 @@ components:
     version: 1
   categories:
   - name: Light
+metadata:
+  mnmn: SmartThingsEdge
+  vid: philips-white-and-color-ambiance
