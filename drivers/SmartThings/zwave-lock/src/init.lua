@@ -103,6 +103,13 @@ end
 
 local init_handler = function(driver, device, event)
   populate_state_from_data(device)
+  -- temp fix before this can be changed from being persisted in memory
+  device:set_field(constants.CODE_STATE, nil, { persist = true })
+end
+
+local do_refresh = function(self, device)
+  device:send(DoorLock:OperationGet({}))
+  device:send(Battery:Get({}))
 end
 
 --- @param driver st.zwave.Driver
@@ -165,6 +172,9 @@ local driver_template = {
   capability_handlers = {
     [capabilities.lockCodes.ID] = {
       [capabilities.lockCodes.commands.updateCodes.NAME] = update_codes
+    },
+    [capabilities.refresh.ID] = {
+      [capabilities.refresh.commands.refresh.NAME] = do_refresh
     }
   },
   zwave_handlers = {
@@ -176,7 +186,8 @@ local driver_template = {
     require("zwave-alarm-v1-lock"),
     require("schlage-lock"),
     require("samsung-lock"),
-    require("keywe-lock")
+    require("keywe-lock"),
+    require("apiv6_bugfix"),
   }
 }
 
